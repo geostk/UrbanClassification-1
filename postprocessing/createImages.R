@@ -8,13 +8,16 @@ library(rgdal)
 library(rgeos)
 library(foreign)
 
-#read original image
-myImg1 <- readGDAL('Composite-2016-03-20.tif')
 
 
 #Function that assigns colors
 colorize <- function(d)
 {
+  
+  #Assign colors: Source: Visualization work done by BharathKumar Ramachandra/tnybny
+  col1 = matrix(0, nrow = 2, ncol = 3)
+  col1[1, ] =  c(0, 0, 255) # blue urban
+  col1[2, ] =  c(255, 255, 255) # white everything else 
   for(i in 1:3)
   {
     d[, i] <- rep(col1[d[1, 1], i], nrow(d))
@@ -24,8 +27,14 @@ colorize <- function(d)
 
 createResult <- function(cl.method){
   
+  
+  #read original image
+  myImg1 <- readGDAL('../preprocessing/Composite-2016-03-20.tif')
+  
   #read classified file
-  classified <- read.csv(paste(cl.method,'.csv',sep=''))
+  classifiedPath <- paste('../classification/',cl.method,'.csv',sep='')
+  print(classifiedPath)
+  classified <- read.csv(paste('../classification/',cl.method,'.csv',sep=''))
   
   #column names of features - top 10 features selected using feature selection + Class Label
   colnames(classified) <-   c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
@@ -43,16 +52,12 @@ createResult <- function(cl.method){
   print('classes summary')
   print(summary(classified))
   
-  #Assign colors: Source: Visualization work done by BharathKumar Ramachandra/tnybny
-  col1 = matrix(0, nrow = 2, ncol = 3)
-  col1[1, ] =  c(0, 0, 255) # blue urban
-  col1[2, ] =  c(255, 255, 255) # white everything else 
   
   print('Beginning to add colors')
   classified$ID <- seq.int(nrow(classified))
   
   t <- split(classified, classified$Class, drop = T)
-  t <- lapply(t, FUN = colorize1)
+  t <- lapply(t, FUN = colorize)
   
   print('Colorized completed')
   x <- do.call("rbind", t)
@@ -70,13 +75,14 @@ createResult <- function(cl.method){
   
   
   
+  
 }
 
 
 classifiers <- c("nbayes","j48","randomForest","mlp","knn")
 
 for( i in 1:length(classifiers)){
-  createResult(classifiers(i))
+  createResult(classifiers[i])
 }
 
 

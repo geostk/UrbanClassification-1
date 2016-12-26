@@ -57,9 +57,9 @@ public class UrbanClassification {
 
 				//Set class attribute
 				if (trData.classIndex() == -1)
-					trData.setClassIndex(trData.numAttributes()-1);
+					trData.setClassIndex(0); //first attribute is Class
 				if (teData.classIndex() == -1)
-					teData.setClassIndex(teData.numAttributes()-1);
+					teData.setClassIndex(0); //first attribute is Class
 				Classifier cModel;
 				//Train classifiers
 				switch(args[2]) {

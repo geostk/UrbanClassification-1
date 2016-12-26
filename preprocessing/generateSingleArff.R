@@ -7,7 +7,7 @@ library(rgeos)
 library(foreign)
 
 
-myImg<-readGDAL('C:/Users/Admin/Google Drive/Settlement Mapping/Landsat8/2016-03-20/Composite-2016-03-20.tif')
+myImg<-readGDAL('Composite-2016-03-20.tif')
 #simpleImg <- readGDAL('May28-SimpleFinal.tif')
 #advancedImg <- readGDAL('May28-AdvancedFinal.tif')
 myImgData <- myImg@data

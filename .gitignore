@@ -1,3 +1,5 @@
 *.tif
 *.TIF
 *.xml
+*.csv
+*.arff

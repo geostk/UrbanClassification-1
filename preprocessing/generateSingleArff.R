@@ -29,6 +29,8 @@ outputData <- allData
 
 outputData$Class <- as.factor(outputData$Class)
 
-#write.csv(x=outputData,file = 'may28-allImage-top10.csv',row.names = F)
+outputData <- outputData[,c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")]
+
+write.csv(x=outputData,file = 'may28-allImage-top10.csv',row.names = F)
 write.arff(outputData,file='2016-03-20-OnlyBands.arff',relation='testing')
 

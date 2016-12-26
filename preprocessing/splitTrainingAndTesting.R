@@ -44,9 +44,14 @@ for( i in 1:4){
 
 #remove X,Y, id attribute - we don't use them
 data.training <- data.training[,-c(1:3)]
+
 data.testing <- data.testing[,-c(1:3)]
 
+colnames(data.training) <- c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
+colnames(data.testing) <- c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
 #Write down CSV and/or arff files
+data.training$Class <- as.factor(data.training$Class)
+data.testing$Class <- as.factor(data.testing$Class)
 write.csv(x=data.training,'2016-03-20-training-OnlyBands.csv',row.names = F)
 write.arff(data.training,file='2016-03-20-training-OnlyBands.arff',relation='training')
 

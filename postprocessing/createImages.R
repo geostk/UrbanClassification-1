@@ -18,11 +18,11 @@ colorize <- function(d)
   col1 = matrix(0, nrow = 2, ncol = 3)
   col1[1, ] =  c(0, 0, 255) # blue urban
   col1[2, ] =  c(255, 255, 255) # white everything else 
-  for(i in 1:3)
-  {
-    d[, i] <- rep(col1[d[1, 2], i], nrow(d))
-  }
+  d$R <- rep(col1[d$Class[1], 1], nrow(d))
+  d$G <- rep(col1[d$Class[1], 2], nrow(d))
+  d$B <- rep(col1[d$Class[1], 3], nrow(d))
   d
+
 }
 
 createResult <- function(cl.method){
@@ -65,10 +65,10 @@ createResult <- function(cl.method){
   x <- x[order(x$ID), ] #Reorder data in original order
   
   
-  x <- x[,c("R","G","B")] #Remove unnecessary columns
+  x <- x[, c("R","G","B")] #Remove unnecessary columns
   colnames(x) <-c('band4','band3','band2') #Rename first three bands to ba
-  myImg@data[,c('band4','band3','band2')]<-x #Copy R,G,B bands
-  writeGDAL(myImg, fname = paste(cl.method,'-tiff.tif',sep='')) #write GDAL file
+  myImg1@data[,c('band4','band3','band2')]<-x #Copy R,G,B bands
+  writeGDAL(myImg1, fname = paste(cl.method,'-tiff.tif',sep='')) #write GDAL file
   
   print(paste(cl.method,': Write completed'))
   
@@ -84,8 +84,6 @@ classifiers <- c("nbayes","j48","randomForest","mlp","knn")
 for( i in 1:length(classifiers)){
   createResult(classifiers[i])
 }
-
-
 
 
 

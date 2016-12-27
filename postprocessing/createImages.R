@@ -20,7 +20,7 @@ colorize <- function(d)
   col1[2, ] =  c(255, 255, 255) # white everything else 
   for(i in 1:3)
   {
-    d[, i] <- rep(col1[d[1, 1], i], nrow(d))
+    d[, i] <- rep(col1[d[1, 2], i], nrow(d))
   }
   d
 }
@@ -65,7 +65,7 @@ createResult <- function(cl.method){
   x <- x[order(x$ID), ] #Reorder data in original order
   
   
-  x <- x[, c("R","G","B")] #Remove unnecessary columns
+  x <- x[,c("R","G","B")] #Remove unnecessary columns
   colnames(x) <-c('band4','band3','band2') #Rename first three bands to ba
   myImg@data[,c('band4','band3','band2')]<-x #Copy R,G,B bands
   writeGDAL(myImg, fname = paste(cl.method,'-tiff.tif',sep='')) #write GDAL file

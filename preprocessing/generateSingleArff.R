@@ -11,6 +11,7 @@ myImg<-readGDAL('Composite-2016-03-20.tif')
 #simpleImg <- readGDAL('May28-SimpleFinal.tif')
 #advancedImg <- readGDAL('May28-AdvancedFinal.tif')
 myImgData <- myImg@data
+myImgData <- myImgData[!!rowSums(myImgData),] #replace all rows with zeros
 #simpleImgData <- simpleImg@data
 #advancedImgData <- advancedImg@data
 colnames(myImgData) <- c("Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
@@ -31,6 +32,6 @@ outputData$Class <- as.factor(outputData$Class)
 
 outputData <- outputData[,c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")]
 
-write.csv(x=outputData,file = 'may28-allImage-top10.csv',row.names = F)
-write.arff(outputData,file='2016-03-20-OnlyBands.arff',relation='testing')
+#write.csv(x=outputData,file = 'may28-allImage-top10-noZeros.csv',row.names = F)
+write.arff(outputData,file='2016-03-20-OnlyBands-noZeros.arff',relation='testing')
 

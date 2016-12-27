@@ -4,3 +4,9 @@
 *.csv
 *.arff
 *.class
+*.shp
+*.shx
+*.prj
+*.dbf
+*.qpj
+*.cpg

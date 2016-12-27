@@ -23,11 +23,12 @@ import weka.classifiers.trees.RandomForest;
 import weka.classifiers.trees.J48;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.lazy.IBk;
+import weka.classifiers.SMO;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
 
+import weka.core.converters.ConverterUtils.DataSource;
 
 
 public class UrbanClassification {
@@ -77,6 +78,9 @@ public class UrbanClassification {
 						break;
 					case "knn":
 						cModel = (Classifier)new IBk(10);
+						break;
+					case "svm":
+						cModel = (Classifier)new SMO();
 						break;
 					default:
 						System.out.println("Incompatible classifier name given, using Naive Bayes by default");

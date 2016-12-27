@@ -11,7 +11,7 @@ myImg<-readGDAL('Composite-2016-03-20.tif')
 #simpleImg <- readGDAL('May28-SimpleFinal.tif')
 #advancedImg <- readGDAL('May28-AdvancedFinal.tif')
 myImgData <- myImg@data
-myImgData <- myImgData[!!rowSums(myImgData),] #replace all rows with zeros
+#myImgData <- myImgData[!!rowSums(myImgData),] #replace all rows with zeros
 #simpleImgData <- simpleImg@data
 #advancedImgData <- advancedImg@data
 colnames(myImgData) <- c("Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
@@ -20,7 +20,7 @@ colnames(myImgData) <- c("Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
 allData <- myImgData
 #allData <- cbind(myImgData,simpleImgData,advancedImgData)
 
-x2 <- sample(1:4,nrow(allData),replace=T)
+x2 <- sample(1:5,nrow(allData),replace=T)
 allData$Class <-x2
 
 #top10 <- c('R','G','Aerosol','energy','B','invDiffM','SWIR1','SWIR2','diffEntr','inertia','Class')

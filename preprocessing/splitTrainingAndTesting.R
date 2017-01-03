@@ -12,7 +12,7 @@ library(rgdal)
 library(rgeos)
 library(foreign)
 
-data.all <- read.csv('2016-03-20-Sampled.csv') #contains all sampled points generated using
+data.all <- read.csv('2016-03-20-Sampled-Clipped-Features.csv') #contains all sampled points generated using
 #point sampling tool in QGIS
 
 x2 <- sample(1:nrow(data.all),nrow(data.all),replace=F)
@@ -32,7 +32,7 @@ data.training<- data.frame()
 data.testing <- data.frame()
 #colnames(data.training) <- colnames(data.all)
 
-for( i in 1:4){
+for( i in 1:5){
   current <- data.frame(data.all.split[i])
   colnames(current) <- colnames(data.all)
   noSamples <- nrow(current)
@@ -47,15 +47,17 @@ data.training <- data.training[,-c(1:3)]
 
 data.testing <- data.testing[,-c(1:3)]
 
-colnames(data.training) <- c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
-colnames(data.testing) <- c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus")
+colnames(data.training) <- c("Class","Aerosol","B","G","R","NIR","SWIR1","SWIR2","Cirrus","energy","entropy","corr","invDiffM","inertia","clusShade","clusProm","hCorr"
+                              , "mean","variance","dissim","sumAvg","sumVar","sumEntr","diffEntr","diffVar","IC1","IC2", 
+                             "SRE" , "LRE", "GLNU", "RLNU", "RP",     "LGRE", "HGLRE", "SRLGLE", "SRHGLE","LRLGLE", "LRHGLE")
+colnames(data.testing) <- colnames(data.training)
 #Write down CSV and/or arff files
 data.training$Class <- as.factor(data.training$Class)
 data.testing$Class <- as.factor(data.testing$Class)
-write.csv(x=data.training,'2016-03-20-training-OnlyBands.csv',row.names = F)
-write.arff(data.training,file='2016-03-20-training-OnlyBands.arff',relation='training')
+write.csv(x=data.training,'2016-03-20-training-Features.csv',row.names = F)
+write.arff(data.training,file='2016-03-20-training-Features.arff',relation='training')
 
-write.csv(x=data.testing,'2016-03-20-testing-OnlyBands.csv',row.names = F)
-write.arff(data.testing,file='2016-03-20-testing-OnlyBands.arff',relation='testing')
+write.csv(x=data.testing,'2016-03-20-testing-Features.csv',row.names = F)
+write.arff(data.testing,file='2016-03-20-testing-Features.arff',relation='testing')
 
 
